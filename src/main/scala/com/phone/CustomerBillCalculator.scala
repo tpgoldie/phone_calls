@@ -1,6 +1,9 @@
 package com.phone
 
-case class CustomerBillCalculator(callChargeCalculator: PhoneCallChargeCalculator, promotion: Option[PhoneCallPromotion] = None) {
+case class CustomerBillCalculator(promotion: Option[PhoneCallPromotion] = None) {
+
+  private val callChargeCalculator = new PhoneCallChargeCalculator()
+
   def calculateBills(calls: Seq[PhoneCall]): Seq[PhoneBill] = {
     val groupByCustomer = calls.groupBy(call => call.customerId)
 

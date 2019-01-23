@@ -16,7 +16,7 @@ class CalculatePhoneBillsSpec extends PhoneCallsProcessingSpec  {
                     PhoneCall("B", "555-333-212", CallDuration(0, 4, 29))
                   )
 
-      val billsCalculator = CustomerBillCalculator(new PhoneCallChargeCalculator())
+      val billsCalculator = CustomerBillCalculator()
 
       When("the customer bills are calculated")
       val actual = billsCalculator.calculateBills(calls)

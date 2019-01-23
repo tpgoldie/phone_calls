@@ -15,7 +15,7 @@ class ApplyRemoveMostExpensivePhoneCallPromotionSpec extends PhoneCallsProcessin
         PhoneCall("B", "555-333-212", CallDuration(0, 1, 47))
       )
 
-      val billsCalculator = CustomerBillCalculator(new PhoneCallChargeCalculator(), Some(new RemoveMostExpensivePhoneCall()))
+      val billsCalculator = CustomerBillCalculator(Some(new RemoveMostExpensivePhoneCall()))
 
       When("the customer bills are calculated")
       val actual = billsCalculator.calculateBills(calls)
