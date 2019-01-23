@@ -16,13 +16,13 @@ object CallDuration {
 
 }
 
-case class CustomerCall(customerId: String, phoneNumberCalled: String, duration: CallDuration) {
+case class PhoneCall(customerId: String, phoneNumberCalled: String, duration: CallDuration) {
 }
 
-object CustomerCall {
-  def apply(record: String): CustomerCall = {
+object PhoneCall {
+  def apply(record: String): PhoneCall = {
     val tokens = record.split(" ")
 
-    new CustomerCall(tokens(0), tokens(1), CallDuration(tokens(2)))
+    new PhoneCall(tokens(0), tokens(1), CallDuration(tokens(2)))
   }
 }

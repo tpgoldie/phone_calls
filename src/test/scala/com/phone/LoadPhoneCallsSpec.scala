@@ -1,8 +1,6 @@
 package com.phone
 
-import org.scalatest.{FeatureSpec, GivenWhenThen, Matchers}
-
-class LoadCustomerCallsSpec extends FeatureSpec with GivenWhenThen with Matchers {
+class LoadPhoneCallsSpec extends PhoneCallsProcessingSpec {
   info("As a customer call charge calculator")
   info("I want to be able to process customer call records from the customer calls log file")
   info("So I can calculate customer call charges")
@@ -18,14 +16,14 @@ class LoadCustomerCallsSpec extends FeatureSpec with GivenWhenThen with Matchers
       }
 
       When("loading the customer calls")
-      val customerCallsReader: CustomerCallsReader = CustomerCallsLogReader(callsLog)
+      val customerCallsReader: PhoneCallsReader = PhoneCallsLogReader(callsLog)
 
       val actual = customerCallsReader.read()
 
       Then("the customer call records are available for processing")
       actual should contain inOrderOnly (
-        CustomerCall("A", "555-333-212", CallDuration(0, 2, 3)),
-        CustomerCall("B", "555-333-202", CallDuration(0, 1, 20))
+        PhoneCall("A", "555-333-212", CallDuration(0, 2, 3)),
+        PhoneCall("B", "555-333-202", CallDuration(0, 1, 20))
       )
     }
   }

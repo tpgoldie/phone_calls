@@ -5,11 +5,11 @@ import com.phone.CallChargePricingPerSecond.{AdditionalMinutesPrice, ThreeMinute
 
 class CallChargeCalculator {
 
-  def calculateCallCharges(calls: Seq[CustomerCall]) : CustomerBill = {
+  def calculateCallCharges(calls: Seq[PhoneCall]) : PhoneBill = {
 
     val pairs = calls.map(call => Tuple2(call, calculateCallCharge(call.duration)))
 
-    CustomerBill(calls.head.customerId, calls.map(call => call.duration), pairs.flatMap(pair => pair._2).sum)
+    PhoneBill(calls.head.customerId, calls.map(call => call.duration), pairs.flatMap(pair => pair._2).sum)
   }
 
   private def calculateCallCharge(duration: CallDuration) : Option[BigDecimal] = {
