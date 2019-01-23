@@ -1,8 +1,9 @@
 package com.phone
 
-class CallChargeCalculator {
+import com.phone.CallChargeCalculator.ThreeMinutesInSeconds
+import com.phone.CallChargePricingPerSecond.{AdditionalMinutesPrice, ThreeMinutesUnitPrice}
 
-  private val ThreeMinutesInSeconds = 180
+class CallChargeCalculator {
 
   def calculateCallCharges(calls: Seq[CustomerCall]) : CustomerBill = {
 
@@ -13,9 +14,23 @@ class CallChargeCalculator {
 
   private def calculateCallCharge(duration: CallDuration) : Option[BigDecimal] = {
     if (duration.length <= ThreeMinutesInSeconds) {
-      return Some(BigDecimal(duration.length * 0.05))
+      return Some(BigDecimal(duration.length * ThreeMinutesUnitPrice))
+    }
+
+    if (duration.length > ThreeMinutesInSeconds) {
+      return Some(BigDecimal(ThreeMinutesInSeconds * ThreeMinutesUnitPrice) +
+        BigDecimal((duration.length - ThreeMinutesInSeconds) * AdditionalMinutesPrice))
     }
 
     None
   }
+}
+
+object CallChargeCalculator {
+  val ThreeMinutesInSeconds = 180
+}
+
+object CallChargePricingPerSecond {
+  val ThreeMinutesUnitPrice = 0.05
+  val AdditionalMinutesPrice = 0.03
 }

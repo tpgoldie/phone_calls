@@ -39,9 +39,10 @@ class CalculateCustomerCallChargesSpec extends FeatureSpec with GivenWhenThen wi
       val callChargeCalculator = new CallChargeCalculator()
 
       When("The call charge is calculated")
-      val actual = callChargeCalculator.calculateCallCharges(Seq(CustomerCall("A", "555-333-212", CallDuration(0, 2, 59))))
+      val actual = callChargeCalculator.calculateCallCharges(Seq(CustomerCall("A", "555-333-212", duration)))
 
       Then("The customer charge is calculated at 0.05p per second")
+      val cost = BigDecimal((2 * 60 + 59) * 0.05)
       actual should be(CustomerBill("A", Seq(CallDuration(0, 2, 59)), BigDecimal((2 * 60 + 59) * 0.05)))
     }
 
@@ -52,10 +53,27 @@ class CalculateCustomerCallChargesSpec extends FeatureSpec with GivenWhenThen wi
       val callChargeCalculator = new CallChargeCalculator()
 
       When("The call charge is calculated")
-      val actual = callChargeCalculator.calculateCallCharges(Seq(CustomerCall("A", "555-333-212", CallDuration(0, 3, 0))))
+      val actual = callChargeCalculator.calculateCallCharges(Seq(CustomerCall("A", "555-333-212", duration)))
 
       Then("The customer charge is calculated at 0.05p per second")
-      actual should be(CustomerBill("A", Seq(CallDuration(0, 3, 0)), BigDecimal(3 * 60 * 0.05)))
+      val cost = BigDecimal(3 * 60 * 0.05)
+      actual should be(CustomerBill("A", Seq(CallDuration(0, 3, 0)), cost))
+    }
+
+    // any call over 3 minutes in duration the additional time is charged at 0.03p/sec
+    scenario("Calculate the call charge for a call duration of over three minutes") {
+      Given("A call duration of over three minutes")
+      val duration = CallDuration(0, 4, 23)
+
+      val callChargeCalculator = new CallChargeCalculator()
+
+      When("The call charge is calculated")
+      val actual = callChargeCalculator.calculateCallCharges(Seq(CustomerCall("A", "555-333-212", duration)))
+
+      Then("The customer charge is calculated at 0.05p per second for the first three minutes and " +
+        "the additional time over three minutes is charged at 0.03p per second")
+      val cost = BigDecimal(3 * 60 * 0.05) + BigDecimal((1 * 60 + 23) * 0.03)
+      actual should be(CustomerBill("A", Seq(CallDuration(0, 4, 23)), cost))
     }
   }
 }
