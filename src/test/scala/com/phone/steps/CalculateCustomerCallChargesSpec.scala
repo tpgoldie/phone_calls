@@ -103,4 +103,21 @@ class CalculateCustomerCallChargesSpec extends FeatureSpec with GivenWhenThen wi
       actual should be(CustomerBill("A", Seq(CallDuration(0, -4, 23)), cost))
     }
   }
+
+  scenario("Calculate the call charges for more than one call for the same customer") {
+    Given("A sequence of calls of mixed duration")
+    val durations = Seq(CallDuration(0, 2, 21), CallDuration(0, 3, 0), CallDuration(0, 4, 23))
+
+    val callChargeCalculator = new CallChargeCalculator()
+
+    When("the call charge is calculated")
+    val calls = durations.map(duration => CustomerCall("A", "555-333-212", duration))
+
+    val actual = callChargeCalculator.calculateCallCharges(calls)
+
+    Then("the customer charge is the sum of all the call charges for each call")
+    val cost = BigDecimal((2 * 60 + 21) * 0.05) + BigDecimal(3 * 60 * 0.05) + BigDecimal(3 * 60 * 0.05) + BigDecimal((1 * 60 + 23) * 0.03)
+
+    actual should be(CustomerBill("A", durations, cost))
+  }
 }
