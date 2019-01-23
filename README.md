@@ -10,3 +10,10 @@ For a customer the cost of a call up to and including 3 minutes in duration is c
 
 Write a program that when run will parse the `calls.log` file and print out the total cost of calls for the day for each customer. You can use any libraries you wish to.
 
+
+# Additional Information
+
+From the base directory of this project run sbt "run PATH_TO_FILE_FROM_HOME_DIRECTORY"
+where the the second argument represents the path to the file from your HOME directory
+
+eg sbt "run dev/sky/disco-test-phone-company-master/src/main/resources/calls.log"
