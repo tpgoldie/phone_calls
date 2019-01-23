@@ -12,7 +12,7 @@ class CallChargeCalculator {
   }
 
   private def calculateCallCharge(duration: CallDuration) : Option[BigDecimal] = {
-    if (duration.length < ThreeMinutesInSeconds) {
+    if (duration.length <= ThreeMinutesInSeconds) {
       return Some(BigDecimal(duration.length * 0.05))
     }
 

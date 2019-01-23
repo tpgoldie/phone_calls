@@ -44,5 +44,18 @@ class CalculateCustomerCallChargesSpec extends FeatureSpec with GivenWhenThen wi
       Then("The customer charge is calculated at 0.05p per second")
       actual should be(CustomerBill("A", Seq(CallDuration(0, 2, 59)), BigDecimal((2 * 60 + 59) * 0.05)))
     }
+
+    scenario("Calculate the call charge for a call duration of exactly three minutes") {
+      Given("A call duration of less than three minutes")
+      val duration = CallDuration(0, 3, 0)
+
+      val callChargeCalculator = new CallChargeCalculator()
+
+      When("The call charge is calculated")
+      val actual = callChargeCalculator.calculateCallCharges(Seq(CustomerCall("A", "555-333-212", CallDuration(0, 3, 0))))
+
+      Then("The customer charge is calculated at 0.05p per second")
+      actual should be(CustomerBill("A", Seq(CallDuration(0, 3, 0)), BigDecimal(3 * 60 * 0.05)))
+    }
   }
 }
