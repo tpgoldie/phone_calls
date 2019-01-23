@@ -9,7 +9,7 @@ class CallChargeCalculator {
 
     val pairs = calls.map(call => Tuple2(call, calculateCallCharge(call.duration)))
 
-    PhoneBill(calls.head.customerId, calls.map(call => call.duration), pairs.flatMap(pair => pair._2).sum)
+    PhoneBill(calls.head.customerId, calls, pairs.flatMap(pair => pair._2).sum)
   }
 
   private def calculateCallCharge(duration: CallDuration) : Option[BigDecimal] = {

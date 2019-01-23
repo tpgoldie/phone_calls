@@ -13,11 +13,12 @@ class CalculatePhoneCallChargesSpec extends PhoneCallsProcessingSpec {
       val callChargeCalculator = new CallChargeCalculator()
 
       When("The call charge is calculated")
-      val actual = callChargeCalculator.calculateCallCharges(Seq(PhoneCall("A", "555-333-212", duration)))
+      val calls = Seq(PhoneCall("A", "555-333-212", duration))
+      val actual = callChargeCalculator.calculateCallCharges(calls)
 
       Then("The customer charge is calculated at 0.05p per second")
       val cost = BigDecimal((2 * 60 + 59) * 0.05)
-      actual should be(PhoneBill("A", Seq(CallDuration(0, 2, 59)), BigDecimal((2 * 60 + 59) * 0.05)))
+      actual should be(PhoneBill("A", calls, BigDecimal((2 * 60 + 59) * 0.05)))
     }
 
     scenario("Calculate the call charge for a call duration of exactly three minutes") {
@@ -27,11 +28,12 @@ class CalculatePhoneCallChargesSpec extends PhoneCallsProcessingSpec {
       val callChargeCalculator = new CallChargeCalculator()
 
       When("the call charge is calculated")
-      val actual = callChargeCalculator.calculateCallCharges(Seq(PhoneCall("A", "555-333-212", duration)))
+      val calls = Seq(PhoneCall("A", "555-333-212", duration))
+      val actual = callChargeCalculator.calculateCallCharges(calls)
 
       Then("the customer charge is calculated at 0.05p per second")
       val cost = BigDecimal(3 * 60 * 0.05)
-      actual should be(PhoneBill("A", Seq(CallDuration(0, 3, 0)), cost))
+      actual should be(PhoneBill("A", calls, cost))
     }
 
     scenario("Calculate the call charge for a call duration of over three minutes") {
@@ -41,12 +43,13 @@ class CalculatePhoneCallChargesSpec extends PhoneCallsProcessingSpec {
       val callChargeCalculator = new CallChargeCalculator()
 
       When("the call charge is calculated")
-      val actual = callChargeCalculator.calculateCallCharges(Seq(PhoneCall("A", "555-333-212", duration)))
+      val calls = Seq(PhoneCall("A", "555-333-212", duration))
+      val actual = callChargeCalculator.calculateCallCharges(calls)
 
       Then("the customer charge is calculated at 0.05p per second for the first three minutes and " +
         "the additional time over three minutes is charged at 0.03p per second")
       val cost = BigDecimal(3 * 60 * 0.05) + BigDecimal((1 * 60 + 23) * 0.03)
-      actual should be(PhoneBill("A", Seq(CallDuration(0, 4, 23)), cost))
+      actual should be(PhoneBill("A", calls, cost))
     }
 
     scenario("Handle a zero call duration") {
@@ -56,11 +59,12 @@ class CalculatePhoneCallChargesSpec extends PhoneCallsProcessingSpec {
       val callChargeCalculator = new CallChargeCalculator()
 
       When("the call charge is calculated")
-      val actual = callChargeCalculator.calculateCallCharges(Seq(PhoneCall("A", "555-333-212", duration)))
+      val calls = Seq(PhoneCall("A", "555-333-212", duration))
+      val actual = callChargeCalculator.calculateCallCharges(calls)
 
       Then("the call charge is 0p")
       val cost = BigDecimal(0)
-      actual should be(PhoneBill("A", Seq(CallDuration(0, 0, 0)), cost))
+      actual should be(PhoneBill("A", calls, cost))
     }
 
     scenario("handle a negative call duration") {
@@ -70,11 +74,12 @@ class CalculatePhoneCallChargesSpec extends PhoneCallsProcessingSpec {
       val callChargeCalculator = new CallChargeCalculator()
 
       When("the call charge is calculated")
-      val actual = callChargeCalculator.calculateCallCharges(Seq(PhoneCall("A", "555-333-212", duration)))
+      val calls = Seq(PhoneCall("A", "555-333-212", duration))
+      val actual = callChargeCalculator.calculateCallCharges(calls)
 
       Then("the customer is not charged")
       val cost = BigDecimal(0)
-      actual should be(PhoneBill("A", Seq(CallDuration(0, -4, 23)), cost))
+      actual should be(PhoneBill("A", calls, cost))
     }
   }
 
@@ -92,6 +97,6 @@ class CalculatePhoneCallChargesSpec extends PhoneCallsProcessingSpec {
     Then("the customer charge is the sum of all the call charges for each call")
     val cost = BigDecimal((2 * 60 + 21) * 0.05) + BigDecimal(3 * 60 * 0.05) + BigDecimal(3 * 60 * 0.05) + BigDecimal((1 * 60 + 23) * 0.03)
 
-    actual should be(PhoneBill("A", durations, cost))
+    actual should be(PhoneBill("A", calls, cost))
   }
 }

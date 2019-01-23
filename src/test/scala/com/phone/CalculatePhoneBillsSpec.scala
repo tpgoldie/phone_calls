@@ -27,8 +27,8 @@ class CalculatePhoneBillsSpec extends PhoneCallsProcessingSpec  {
       val bCalls = calls.filter(call => call.customerId.equals("B"))
 
       actual should contain inOrderOnly (
-        PhoneBill("A", aCalls.map(aCall => aCall.duration), BigDecimal((2 * 60 + 51) * 0.05) + BigDecimal(19 * 0.05)),
-        PhoneBill("B", bCalls.map(bCall => bCall.duration), BigDecimal((3 * 60 * 0.05) + (13 * 0.03)) +
+        PhoneBill("A", aCalls, BigDecimal((2 * 60 + 51) * 0.05) + BigDecimal(19 * 0.05)),
+        PhoneBill("B", bCalls, BigDecimal((3 * 60 * 0.05) + (13 * 0.03)) +
           BigDecimal((1 * 60 + 47) * 0.05) + BigDecimal((3 * 60 * 0.05) + (1 * 60 + 29) * 0.03))
       )
     }
