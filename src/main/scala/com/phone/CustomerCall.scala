@@ -1,6 +1,8 @@
 package com.phone
 
-case class CallDuration(hours: Int, minutes: Int, seconds: Int) {}
+case class CallDuration(hours: Int, minutes: Int, seconds: Int) {
+  val length = hours * 3600 + minutes * 60 + seconds
+}
 
 object CallDuration {
   def apply(record: String) : CallDuration = {
@@ -14,7 +16,7 @@ object CallDuration {
 
 }
 
-case class CustomerCall(customerId: String, phoneNumberCalled: String, callDuration: CallDuration) {
+case class CustomerCall(customerId: String, phoneNumberCalled: String, duration: CallDuration) {
 }
 
 object CustomerCall {
