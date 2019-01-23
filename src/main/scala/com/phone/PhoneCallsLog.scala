@@ -1,5 +1,5 @@
 package com.phone
 
-trait CallsLog {
+trait PhoneCallsLog {
   def loadCustomerCalls: Array[String]
 }

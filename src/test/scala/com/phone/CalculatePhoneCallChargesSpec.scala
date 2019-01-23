@@ -10,7 +10,7 @@ class CalculatePhoneCallChargesSpec extends PhoneCallsProcessingSpec {
       Given("A call duration of less than three minutes")
       val duration = CallDuration(0, 2, 59)
 
-      val callChargeCalculator = new CallChargeCalculator()
+      val callChargeCalculator = new PhoneCallChargeCalculator()
 
       When("The call charge is calculated")
       val calls = Seq(PhoneCall("A", "555-333-212", duration))
@@ -25,7 +25,7 @@ class CalculatePhoneCallChargesSpec extends PhoneCallsProcessingSpec {
       Given("A call duration of exactly three minutes")
       val duration = CallDuration(0, 3, 0)
 
-      val callChargeCalculator = new CallChargeCalculator()
+      val callChargeCalculator = new PhoneCallChargeCalculator()
 
       When("the call charge is calculated")
       val calls = Seq(PhoneCall("A", "555-333-212", duration))
@@ -40,7 +40,7 @@ class CalculatePhoneCallChargesSpec extends PhoneCallsProcessingSpec {
       Given("A call duration of over three minutes")
       val duration = CallDuration(0, 4, 23)
 
-      val callChargeCalculator = new CallChargeCalculator()
+      val callChargeCalculator = new PhoneCallChargeCalculator()
 
       When("the call charge is calculated")
       val calls = Seq(PhoneCall("A", "555-333-212", duration))
@@ -56,7 +56,7 @@ class CalculatePhoneCallChargesSpec extends PhoneCallsProcessingSpec {
       Given("A call duration of zero length")
       val duration = CallDuration(0, 0, 0)
 
-      val callChargeCalculator = new CallChargeCalculator()
+      val callChargeCalculator = new PhoneCallChargeCalculator()
 
       When("the call charge is calculated")
       val calls = Seq(PhoneCall("A", "555-333-212", duration))
@@ -71,7 +71,7 @@ class CalculatePhoneCallChargesSpec extends PhoneCallsProcessingSpec {
       Given("A negative call duration")
       val duration = CallDuration(0, -4, 23)
 
-      val callChargeCalculator = new CallChargeCalculator()
+      val callChargeCalculator = new PhoneCallChargeCalculator()
 
       When("the call charge is calculated")
       val calls = Seq(PhoneCall("A", "555-333-212", duration))
@@ -87,7 +87,7 @@ class CalculatePhoneCallChargesSpec extends PhoneCallsProcessingSpec {
     Given("A sequence of calls of mixed duration")
     val durations = Seq(CallDuration(0, 2, 21), CallDuration(0, 3, 0), CallDuration(0, 4, 23))
 
-    val callChargeCalculator = new CallChargeCalculator()
+    val callChargeCalculator = new PhoneCallChargeCalculator()
 
     When("the call charge is calculated")
     val calls = durations.map(duration => PhoneCall("A", "555-333-212", duration))

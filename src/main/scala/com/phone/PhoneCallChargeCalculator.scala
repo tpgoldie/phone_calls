@@ -1,9 +1,9 @@
 package com.phone
 
-import com.phone.CallChargeCalculator.ThreeMinutesInSeconds
+import com.phone.PhoneCallChargeCalculator.ThreeMinutesInSeconds
 import com.phone.CallChargePricingPerSecond.{AdditionalMinutesPrice, ThreeMinutesUnitPrice}
 
-class CallChargeCalculator {
+class PhoneCallChargeCalculator {
 
   def calculateCallCharges(calls: Seq[PhoneCall]) : PhoneBill = {
 
@@ -30,7 +30,7 @@ class CallChargeCalculator {
   }
 }
 
-object CallChargeCalculator {
+object PhoneCallChargeCalculator {
   val ThreeMinutesInSeconds = 180
 }
 

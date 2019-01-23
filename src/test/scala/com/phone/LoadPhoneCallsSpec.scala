@@ -9,7 +9,7 @@ class LoadPhoneCallsSpec extends PhoneCallsProcessingSpec {
     scenario("Customer call log exists and contains valid phone call records") {
 
       Given("A customer calls log containing valid customer call records")
-      val callsLog: CallsLog = new CallsLog {
+      val callsLog: PhoneCallsLog = new PhoneCallsLog {
         val callRecords = Array("A 555-333-212 00:02:03", "B 555-333-202 00:01:20")
 
         override def loadCustomerCalls: Array[String] = { callRecords }

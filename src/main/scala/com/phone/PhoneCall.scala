@@ -1,7 +1,13 @@
 package com.phone
 
-case class CallDuration(hours: Int, minutes: Int, seconds: Int) {
+case class CallDuration(hours: Int, minutes: Int, seconds: Int) extends Ordered[CallDuration] {
   val length = hours * 3600 + minutes * 60 + seconds
+
+  override def compare(that: CallDuration): Int = {
+    if (this.length == that.length) { 0 }
+    else if (this.length > that.length) { 1 }
+    else { -1 }
+  }
 }
 
 object CallDuration {
