@@ -7,6 +7,9 @@ object Main extends App {
     if (args.length < 1) { throw new RuntimeException(s"Missing filename!") }
 
     val home = System.getProperty("user.home")
+
+    System.out.println(args(0))
+
     val path = s"$home/${args(0)}"
 
     val callsLog: PhoneCallsLog = PhoneCallsLogFile(path)
